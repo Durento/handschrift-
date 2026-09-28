@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <title>Meine Handschrift</title>
+  <meta name="description" content="Eigene Handschrift mit dem Apple Pencil erfassen und beliebigen Text darin ausgeben.">
+  <meta name="theme-color" content="#f5f6f8">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Handschrift">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <link rel="icon" type="image/png" href="icon-192.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body class="loading">
+  <nav class="topbar">
+    <div class="brand">✍︎ Meine Handschrift</div>
+    <div class="tabs" role="tablist">
+      <button class="tab" data-view="capture" role="tab">Erfassen</button>
+      <button class="tab" data-view="overview" role="tab">Übersicht</button>
+      <button class="tab" data-view="write" role="tab">Schreiben</button>
+    </div>
+  </nav>
+
+  <main>
+    <!-- Teil 1: Erfassen -->
+    <section id="view-capture" class="view" hidden>
+      <div class="cap-head">
+        <button id="cap-prev" class="btn icon" aria-label="Vorheriges Zeichen">←</button>
+        <div class="cap-target">
+          <div id="cap-char" class="cap-char">a</div>
+          <div class="cap-text">
+            <div id="cap-meta" class="cap-meta"></div>
+            <div id="cap-hint" class="cap-hint"></div>
+          </div>
+        </div>
+        <div id="cap-variants" class="variants" aria-label="Gespeicherte Varianten"></div>
+        <button id="cap-missing" class="btn">Nächstes fehlendes</button>
+      </div>
+      <div class="pad-wrap"><canvas id="pad" aria-label="Schreibfläche"></canvas></div>
+      <div class="cap-actions">
+        <label class="toggle"><input type="checkbox" id="cap-penonly"> <span>Nur Apple Pencil</span></label>
+        <div class="spacer"></div>
+        <button id="cap-undo" class="btn">↶ Rückgängig</button>
+        <button id="cap-clear" class="btn">Nochmal</button>
+        <button id="cap-variant" class="btn">+ Variante hinzufügen</button>
+        <button id="cap-next" class="btn primary">Weiter →</button>
+      </div>
+    </section>
+
+    <!-- Übersicht -->
+    <section id="view-overview" class="view scroll" hidden>
+      <div class="ov-top">
+        <div>
+          <div id="ov-stats" class="ov-stats"></div>
+          <div class="progress"><div id="ov-progress"></div></div>
+        </div>
+        <div class="btn-row">
+          <button id="ov-export" class="btn">Backup exportieren</button>
+          <button id="ov-import" class="btn">Backup importieren</button>
+        </div>
+      </div>
+      <p class="hint">Tippe auf ein Zeichen, um es (neu) zu schreiben. Gestrichelte Kästchen fehlen noch, die Punkte zeigen die Anzahl der Varianten.</p>
+      <div id="ov-grid"></div>
+      <section class="ov-group ov-extra">
+        <h3>Weitere Zeichen</h3>
+        <div class="btn-row">
+          <input id="ov-extra" type="text" placeholder="z. B. & @ € %" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button id="ov-add" class="btn">Hinzufügen</button>
+          <div class="spacer"></div>
+          <button id="ov-clear" class="btn danger">Alle Zeichen löschen</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- Teil 2: Schreiben -->
+    <section id="view-write" class="view" hidden>
+      <aside class="w-side">
+        <textarea id="w-text" placeholder="Text hier einfügen …&#10;&#10;Leere Zeilen und Absätze werden übernommen." spellcheck="false"></textarea>
+        <div id="w-missing" class="missing-bar"></div>
+        <button id="w-settings-toggle" class="btn wide settings-toggle">Einstellungen</button>
+        <div id="w-settings" class="settings"></div>
+      </aside>
+      <div class="w-main">
+        <div class="w-toolbar">
+          <span id="w-info" class="w-info"></span>
+          <div class="spacer"></div>
+          <button id="w-png-all" class="btn">Alle Seiten als PNG</button>
+          <button id="w-pdf" class="btn primary">PDF</button>
+        </div>
+        <div id="w-preview" class="w-preview"><div id="w-pages" class="pages"></div></div>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
